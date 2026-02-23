@@ -11,31 +11,36 @@ let n0=document.getElementById("n0");
 
 
 const display = document.getElementById("display"); 
-
 const botones = document.querySelectorAll(".button");
-
 
 botones.forEach(boton => {
     boton.addEventListener("click", () => {
-        const valorBoton = boton.innerText; 
+        const textoVisible = boton.innerText;
+        // Si el botón tiene data-valor (como el de potencia), usamos ese. 
+        // Si no, usamos el texto normal.
+        const valorParaCalculo = boton.dataset.valor || textoVisible; 
 
-        if (valorBoton !== "=" && valorBoton !== "C") {
-            display.value += valorBoton;
+        if (textoVisible !== "=" && textoVisible !== "C") {
+            // Aquí añadimos el valor "oculto" (**) al display
+            display.value += valorParaCalculo;
         }
 
-        if (valorBoton === "C" || valorBoton === "AC") {
+        if (textoVisible === "C" || textoVisible === "AC") {
             display.value = "";
         }
-        if (valorBoton === "=") {
+
+        if (textoVisible === "=") {
             try {
+                // eval() reconocerá el "**" que se insertó
                 display.value = eval(display.value);
             } catch (error) {
                 display.value = "Error";
-            }}
+            }
+        }
 
-            if (valorBoton === "√") {
-    display.value = Math.sqrt(parseFloat(display.value));
-}
+        if (textoVisible === "√") {
+            // Nota: Para la raíz, es mejor calcularlo sobre el valor actual antes de añadir el símbolo
+            display.value = Math.sqrt(parseFloat(display.value));
+        }
     });
 });
-
