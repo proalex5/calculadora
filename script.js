@@ -6,8 +6,12 @@ botones.forEach(boton => {
         const textoVisible = boton.innerText;
         const valorParaCalculo = boton.dataset.valor || textoVisible; 
 
-        // 1. Lógica para BORRAR
-        if (textoVisible === "C" || textoVisible === "AC") {
+        if (textoVisible === "Del") {
+            display.value = display.value.slice(0, -1);
+            return; 
+        }
+
+        if (textoVisible === "C") {
             display.value = "";
             return; // Detenemos aquí para que no escriba "C" en la pantalla
         }
