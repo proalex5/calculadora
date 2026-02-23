@@ -1,6 +1,3 @@
-
-
-
 let n1=document.getElementById("n1");
 let n2=document.getElementById("n2");
 let n3=document.getElementById("n3");
@@ -17,11 +14,6 @@ const display = document.getElementById("display");
 
 const botones = document.querySelectorAll(".button");
 
-document.addEventListener('click', () => {
-    const audio = document.getElementById("musicaFondo");
-    audio.volume = 0.1;
-    audio.play();
-}, { once: true });
 
 botones.forEach(boton => {
     boton.addEventListener("click", () => {
