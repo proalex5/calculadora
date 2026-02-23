@@ -6,28 +6,31 @@ botones.forEach(boton => {
         const textoVisible = boton.innerText;
         const valorParaCalculo = boton.dataset.valor || textoVisible; 
 
+        if (textoVisible === "C" || textoVisible === "AC") {
+            display.value = "";
+            return;
+        }
+
         if (textoVisible === "Del") {
             display.value = display.value.slice(0, -1);
-            return; 
+            return;
         }
 
-        if (textoVisible === "C") {
-            display.value = "";
-            return; // Detenemos aquí para que no escriba "C" en la pantalla
-        }
-
-        // 2. Lógica para la RAÍZ
         if (textoVisible === "√") {
             if (display.value !== "") {
-                display.value = Math.sqrt(eval(display.value));
+                try {
+                    display.value = Math.sqrt(eval(display.value));
+                } catch {
+                    display.value = "Error";
+                }
             }
             return;
         }
 
-        // 3. Lógica para el IGUAL
+
         if (textoVisible === "=") {
             try {
-                // Reemplazamos la coma por punto por si el usuario la usó
+
                 let expresion = display.value.replace(/,/g, ".");
                 display.value = eval(expresion);
             } catch (error) {
@@ -36,8 +39,6 @@ botones.forEach(boton => {
             return;
         }
 
-        // 4. Lógica para escribir en pantalla (Números y operadores como ** o *)
-        // Solo añadimos si no es uno de los botones de control anteriores
         display.value += valorParaCalculo;
     });
 });
